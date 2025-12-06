@@ -1,6 +1,11 @@
-def main():
-    print("Hello from backend!")
+from fastapi import FastAPI
+from routers import cat
+from database import init_db
 
+app = FastAPI()
 
-if __name__ == "__main__":
-    main()
+# Initialisation of database
+init_db()
+
+# Add routes
+app.include_router(cat.router, prefix="/api/v1/cats")
