@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from src.schemas.cat import CatCreate
-from src.services.cat import create_cat
+from app.schemas.cat import CatCreate
+from app.services.cat import create_cat
 
 router = APIRouter(prefix="/cats", tags=["cats"])
 

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from src.models.cat import Cat
-from src.schemas.cat import CatCreate
+from app.models.cat import Cat
+from app.schemas.cat import CatCreate
 
 def create_cat(db: Session, cat: CatCreate):
     db_cat = Cat(cat)

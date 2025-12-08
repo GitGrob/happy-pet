@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from src.schemas.cat import SexEnum
+from app.models.cat import SexEnum
 
 
 class CatCreate(BaseModel):

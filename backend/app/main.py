@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from src.routers import cats
+from app.routers import cats
 from database import init_db
 
 app = FastAPI(
