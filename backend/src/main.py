@@ -1,11 +1,15 @@
 from fastapi import FastAPI
-from routers import cat
+from src.routers import cats
 from database import init_db
 
-app = FastAPI()
+app = FastAPI(
+    title="HappyPet",
+    description="Rest API of Happy pet application",
+    version="v1",
+)
 
 # Initialisation of database
 init_db()
 
 # Add routes
-app.include_router(cat.router, prefix="/api/v1/cats")
+app.include_router(cats.router, prefix="/api/v1/cats")

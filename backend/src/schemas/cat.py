@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from src.schemas.cat import SexEnum
 
 
-class CatBase(BaseModel):
+class CatCreate(BaseModel):
     name: Annotation[str, Field(min_length=1, max_length=20, example="Whiskers")]
     age: Annotation[int, Field(ge=0, le=25, example=3)]
     breed: Annotation[str, Field(min_length=1, max_length=30, example="Siamese")]
