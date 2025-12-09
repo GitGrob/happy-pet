@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from app.routers import cats
-from database import init_db
+from app.routers import cats, health
+from app.database import init_db
 
 app = FastAPI(
     title="HappyPet",
@@ -12,4 +12,5 @@ app = FastAPI(
 init_db()
 
 # Add routes
+app.include_router(health.router, prefix="/health")
 app.include_router(cats.router, prefix="/api/v1/cats")

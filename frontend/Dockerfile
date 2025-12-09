@@ -1,9 +1,9 @@
 FROM node:24.11.1
 
 
-RUN useradd -m appuser
+#RUN useradd -m appuser
 WORKDIR /app
-USER appuser
+#USER appuser
 
 COPY package*.json ./
 RUN npm install

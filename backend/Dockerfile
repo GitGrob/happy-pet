@@ -1,17 +1,14 @@
-FROM python:3.11-slim
+FROM python:3.12-slim AS builder
 
-RUN pip install uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+ENV PATH="/root/.local/bin:$PATH"
 
-RUN useradd -m appuser
 WORKDIR /app
-USER appuser
+COPY pyproject.toml uv.lock ./
 
-COPY pyproject.toml .
 
-RUN uv pip install --system --no-cache-dir --upgrade
+RUN uv sync --frozen --no-install-project
 
-COPY . .
+COPY . . 
 
-EXPOSE 8000
-
-CMD ["uv", "run", "backend:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uv", "run", "uvicorn", "app.main:app", "--port", "8080", "--host", "0.0.0.0"]

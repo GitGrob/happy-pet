@@ -1,7 +1,10 @@
-from sqlalchemy import Column, Integer, String, Boolean
+from enum import Enum
+from sqlalchemy import Integer, String, Boolean, Float
+from sqlalchemy import Enum as SAEnum
+from sqlalchemy.orm import Mapped, mapped_column
 from app.database import Base
 
-class SexEnum(str, Enum):
+class SexEnum(Enum):
     MALE = "Male"
     FEMALE = "Female"
 
@@ -9,13 +12,13 @@ class SexEnum(str, Enum):
 class Cat(Base):
     __tablename__ = 'cats'
 
-    id = Mapped[int] = Column(Integer, primary_key=True, index=True)
-    name = Mapped[str] = Column(String, index=True)
-    age = Mapped[int] = Column(Integer)
-    breed = Mapped[str] = Column(String)
-    sex = Mapped[SexEnum] = Column(String)
-    diabetes = Mapped[bool] = Column(Boolean, default=False)
-    color = Mapped[str] = Column(String)
-    weight = Mapped[float] = Column(Float)
+    id : Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    name : Mapped[str] = mapped_column(String, index=True)
+    age : Mapped[int] = mapped_column(Integer)
+    breed : Mapped[str] = mapped_column(String)
+    sex : Mapped[SexEnum] = mapped_column(SAEnum(SexEnum, name="cat_sex_enum"))
+    diabetes : Mapped[bool] = mapped_column(Boolean, default=False)
+    color : Mapped[str] = mapped_column(String)
+    weight : Mapped[float] = mapped_column(Float)
 
     
