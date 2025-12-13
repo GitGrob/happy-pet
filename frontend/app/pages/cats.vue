@@ -25,7 +25,7 @@
                   <span
                     class="font-medium text-surface-500 dark:text-surface-400 text-sm"
                   >
-                    Breed: {{ item.breed }}
+                    {{ item.breed }}
                   </span>
                   <div class="text-lg font-medium mt-1">{{ item.color }}</div>
                 </div>
