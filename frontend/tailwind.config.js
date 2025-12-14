@@ -8,11 +8,9 @@ export default {
     "./app.vue",
     "./app/**/*.{js,vue,ts}",
   ],
+  darkMode: 'selector',
   theme: {
     extend: {
-      options:{
-        darkModeSelector: '.my-app-dark',
-      }
     },
   },
   plugins: [],
