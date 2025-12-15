@@ -1,5 +1,5 @@
 <template>
-  <MenuBar class="bg-white border-gray-100 shadow-md dark:bg-gray-800">
+  <MenuBar >
     <template #start>
       <svg
         width="35"
@@ -20,18 +20,18 @@
       </svg>
     </template>
     <template #end>
-      <Button icon="pi pi-sun" aria-label="Dark/Light Mode" />
+      <Button @click="toggleDarkMode" icon="pi pi-sun" aria-label="Dark/Light Mode" />
       <span
-        class="text-lg font-semibold text-surface-900 dark:text-surface-100"
+        class="text-lg font-semibold "
       >
         USER NAME
       </span>
       <Avatar icon="pi pi-user" class="mr-2" />
     </template>
   </MenuBar>
-  <Panel class="mx-[10vw] lg:mx-[15vw] my-10 bg-white border-gray-200">
+  <div class="mx-[10vw] lg:mx-[15vw] my-10 ">
     <slot />
-  </Panel>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -42,4 +42,12 @@
 /* -------------------------------------------------------------------------- */
 /*                                  VARIABLES                                 */
 /* -------------------------------------------------------------------------- */
+
+ /* -------------------------------------------------------------------------- */
+ /*                                   METHODS                                  */
+ /* -------------------------------------------------------------------------- */
+
+ const toggleDarkMode = () => {
+   document.documentElement.classList.toggle('dark-mode');
+ };
 </script>
