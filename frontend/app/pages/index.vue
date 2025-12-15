@@ -2,8 +2,8 @@
   <div class="flex flex-col gap-4">
     <Info :cat="cat" />
     <div class="grid grid-cols-2 gap-4">
-      <NextInjection />
-      <LogsTable />
+      <NextInjection :logs="logs" />
+      <LogsTable :logs="logs" />
     </div>
   </div>
 </template>
@@ -20,6 +20,15 @@ const cat = ref<Cat>({
   imageUrl: undefined,
   dateOfBirth: '2020-05-15'
 });
+
+const logs = [
+  {date: '2025-12-15T13:07:04.054', unit: '3.5'},
+  {date: '2025-12-15T13:07:04.054', unit: '3.5'},
+  {date: '2025-12-15T13:07:04.054', unit: '3.5'},
+  {date: '2025-12-15T13:07:04.054', unit: '3.5'},
+  {date: '2025-12-15T13:07:04.054', unit: '3.5'},
+  {date: '2025-12-15T13:07:04.054', unit: '3.5'}
+];
 
 
 </script>

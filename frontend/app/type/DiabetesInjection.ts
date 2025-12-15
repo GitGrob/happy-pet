@@ -5,3 +5,8 @@ export interface DiabetesInjection {
   dosage: number;
   notes?: string;
 }
+
+export interface InjectionLogs {
+  date: string;
+  unit: number;
+}

@@ -11,28 +11,39 @@
       <span class="text-sm text-surface-500 dark:text-surface-300">Recent diabetes entries</span>
 </template> 
 
-    <template #content>   <DataTable size="small" :value="logs">
+    <template #content>   <DataTable size="small" :value="injections">
       <Column field="day" header="Day"></Column>
       <Column field="hour" header="Hour"></Column>
       <Column field="unit" header="Unit"></Column>
-      <Column field="period" header="Period">
-        <template #body="slotProps">
-          <Tag :value="slotProps.data.period" class="uppercase" />
-        </template>
-      </Column>
     </DataTable>
     </template> 
   </Card>  
 </template>
 
 <script setup lang="ts">
-// REPLACE THIS WITH A PROPS
-const logs = [
-  { day: '2023-01-04', hour: '07:00', unit: '3.5', period: 'AM' },
-  { day: '2023-01-03', hour: '07:00', unit: '3.5', period: 'PM' },
-  { day: '2023-01-03', hour: '07:00', unit: '3.5', period: 'AM' },
-  { day: '2023-01-02', hour: '07:00', unit: '3.5', period: 'PM' },
-  { day: '2023-01-02', hour: '07:00', unit: '3.5', period: 'AM' },
-  { day: '2023-01-01', hour: '07:00', unit: '3.5', period: 'PM' }
-];
+  import {DateTime} from 'luxon';
+import type { InjectionLogs } from '~/type/DiabetesInjection';
+
+type InjectionTable = {
+  day: string;
+  hour: string;
+  unit: number;
+}
+
+const props = defineProps<{logs: InjectionLogs[]}>()
+
+/* -------------------------------------------------------------------------- */
+/*                                   COMUTED                                  */
+/* -------------------------------------------------------------------------- */
+const injections = computed<InjectionTable[]>(() => {
+  return props.logs.map((log) => {
+  const datetime = DateTime.fromISO(log.date)
+  return {
+    day: datetime.toFormat('D'),
+    hour: datetime.toFormat('hh:mm a'),
+    unit: log.unit,
+  }
+})
+});
+
 </script>
