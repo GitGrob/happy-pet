@@ -8,13 +8,14 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/image',
     '@primevue/nuxt-module',
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
   ],
   css: ['~/assets/css/main.css'],
   primevue: {
     options: {
       theme: {
         preset: Aura,
+        darkModeSelector: 'light'
       }
     }
   }

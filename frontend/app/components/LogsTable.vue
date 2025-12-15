@@ -1,5 +1,5 @@
 <template>
-  <DataTable size="small" :value="logs" paginator :rows="5">
+  <DataTable size="small" :value="logs">
     <Column field="day" header="Day"></Column>
     <Column field="hour" header="Hour"></Column>
     <Column field="unit" header="Unit"></Column>

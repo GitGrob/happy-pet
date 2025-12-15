@@ -1,6 +1,6 @@
 <template>
   <div class="p-6">
-    <Card class="shadow-md dark:bg-slate-800 max-h-24">
+    <Card class="shadow-md bg-white dark:bg-slate-800 max-h-24">
       <template #content>
         <div class="flex items-center justify-between gap-4 py-1">
           <div class="flex items-center gap-2">
