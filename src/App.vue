@@ -5,36 +5,38 @@
       <Info :cat="cat" />
       <div class="grid grid-cols-2 gap-4">
         <NextInjection :logs="logs" />
-        <LogsTable :logs="logs" />
+        <LogsTable :logs="logs" :loading="injectionStore.isLoading" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import type { Cat } from './type/Cat'
+import { computed, onMounted } from 'vue'
 import Info from './components/Info.vue'
+import { useCatStore } from './stores/catStore'
+import { useInjectionStore } from './stores/injectionStore'
+/* components */
 import NextInjection from './components/NextInjection.vue'
 import LogsTable from './components/LogsTable.vue'
 import Navbar from './components/Navbar.vue'
+import { InjectionLogs } from './type/DiabetesInjection'
 
-const cat = ref<Cat>({
-  id: '1',
-  name: 'Minou',
-  breed: 'Persan',
-  color: '#FF6B6B',
-  weight: 4.5,
-  imageUrl: undefined,
-  dateOfBirth: '2020-05-15'
+
+/* -------------------------------------------------------------------------- */
+/*                                 COMPOSABLES                                */
+/* -------------------------------------------------------------------------- */
+const catStore = useCatStore();
+const injectionStore = useInjectionStore();
+
+/* -------------------------------------------------------------------------- */
+/*                                  LIFCEYCLE                                 */
+/* -------------------------------------------------------------------------- */
+
+onMounted(async () => {
+  await catStore.loadCats();
+  await injectionStore.loadInjectionLogs();
 });
-
-const logs = [
-  { date: '2025-12-15T13:07:04.054', unit: 3.5 },
-  { date: '2025-12-15T13:07:04.054', unit: 3.5 },
-  { date: '2025-12-15T13:07:04.054', unit: 3.5 },
-  { date: '2025-12-15T13:07:04.054', unit: 3.5 },
-  { date: '2025-12-15T13:07:04.054', unit: 3.5 },
-  { date: '2025-12-15T13:07:04.054', unit: 3.5 }
-];
+const cat = computed(() => catStore.getFirstCat);
+const logs = computed((): InjectionLogs[] => injectionStore.getInjectionLogs);
 </script>
