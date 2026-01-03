@@ -1,7 +1,7 @@
 <template>
   <Card>
     <template #title>
-      <div class="flex gap-2">
+      <div class="flex items-center gap-2">
         <i class="pi pi-server text-xl font-bold" />
         <h2>Logs</h2>
       </div>

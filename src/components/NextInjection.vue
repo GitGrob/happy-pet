@@ -1,7 +1,7 @@
 <template>
   <Card v-if="logs">
     <template #title>
-      <div class="flex gap-2">
+      <div class="flex items-center gap-2">
         <i class="pi pi-heart-fill text-xl font-bold" />
         <h2>Next Injection</h2>
       </div>
@@ -19,8 +19,8 @@
             <span class="pi pi-minus" />
           </template>
         </InputNumber>
-        <Button :loading="buttonLoading" :severity="isInjectionAllowed ? '' : 'warn'" raised label="New Injection"
-          @click="addNewInjection()" :disabled="!isInjectionAllowed || !unit" />
+        <Button type="button" :loading="buttonLoading" :severity="isInjectionAllowed ? '' : 'warn'" raised
+          label="New Injection" @click="addNewInjection()" :disabled="!isInjectionAllowed || !unit" />
         <p v-if="!isInjectionAllowed" class="text-center text-orange-600 dark:text-orange-400 mt-1">
           Next injection at {{ nextInjection?.toFormat('hh:mm a') }}
         </p>
@@ -33,11 +33,13 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { Duration, DateTime } from 'luxon'
+import type { InjectionLogs } from '../type/DiabetesInjection'
+import { useInjectionStore } from '../stores/injectionStore'
+/* Components */
 import Card from 'primevue/card'
 import InputNumber from 'primevue/inputnumber'
 import Button from 'primevue/button'
-import { Duration, DateTime } from 'luxon'
-import type { InjectionLogs } from '../type/DiabetesInjection'
 
 /* -------------------------------------------------------------------------- */
 /*                                 COMPOSABLES                                */
@@ -47,7 +49,7 @@ const buttonLoading = ref(false);
 const { addInjectionLog } = injectionStore;
 
 const props = defineProps<{ logs: InjectionLogs[] }>()
-const dose = ref<number | null>(null);
+const unit = ref<number | null>(null);
 
 
 /* -------------------------------------------------------------------------- */

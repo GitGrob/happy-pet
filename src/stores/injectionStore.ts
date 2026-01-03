@@ -1,61 +1,51 @@
 import { defineStore } from 'pinia';
 import type { InjectionLogs } from '~/type/DiabetesInjection';
+import { computed, ref } from 'vue';
+import { ofetch } from 'ofetch';
 
-const API_URL = 'http://localhost:3001/injections';
 
-export const useInjectionStore = defineStore('injection', {
-  state: () => ({
-    logs: [] as InjectionLogs[],
-    isLoading: false,
-  }),
+const API_URL = import.meta.env.VITE_API_URL + '/injections';
 
-  getters: {
-    getInjectionLogs: (state) => state.logs,
-    getLastInjection: (state) => {
-      if (state.logs.length === 0) return null;
-      return state.logs[0];
-    },
-  },
+export const useInjectionStore = defineStore('injection', () => {
+  const logs = ref<InjectionLogs[]>([]);
+  const isLoading = ref<boolean>(false);
 
-  actions: {
-    async loadInjectionLogs() {
-      this.isLoading = true;
-      try {
-        const response = await fetch(API_URL);
-        if (!response.ok) throw new Error('Failed to fetch injections');
-        const data = await response.json();
-        this.logs = data;
-      } catch (error) {
-        console.error('Failed to load injection logs:', error);
-        this.logs = [];
-      } finally {
-        this.isLoading = false;
-      }
-    },
-    async addInjectionLog(log: Omit<InjectionLogs, 'id'>) {
-      try {
-        const response = await fetch(API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(log),
-        });
-        if (!response.ok) throw new Error('Failed to add injection');
-        const newLog = await response.json();
-        this.logs.unshift(newLog);
-      } catch (error) {
-        console.error('Failed to add injection log:', error);
-      }
-    },
-    async removeInjectionLog(id: number) {
-      try {
-        const response = await fetch(`${API_URL}/${id}`, {
-          method: 'DELETE',
-        });
-        if (!response.ok) throw new Error('Failed to delete injection');
-        this.logs = this.logs.filter((log: any) => log.id !== id);
-      } catch (error) {
-        console.error('Failed to remove injection log:', error);
-      }
-    },
-  },
-});
+  const getInjectionLogs = computed((): InjectionLogs[] => logs.value);
+  const getLastInjection = computed((): InjectionLogs | null => {
+    if (logs.value.length === 0) return null;
+    return logs.value[0];
+  });
+
+  async function loadInjectionLogs() {
+    isLoading.value = true;
+    try {
+      logs.value = await ofetch(API_URL);
+    } catch (error) {
+      console.error('Failed to load injection logs:', error);
+      logs.value = [];
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  async function addInjectionLog(log: Omit<InjectionLogs, 'id'>) {
+    try {
+      const newLog = await ofetch(API_URL, {
+        method: 'POST',
+        body: log
+      });
+      logs.value.unshift(newLog);
+    } catch (error) {
+      console.error('Failed to add injection log:', error);
+    }
+  }
+  return {
+    logs,
+    isLoading,
+    getInjectionLogs,
+    getLastInjection,
+    loadInjectionLogs,
+    addInjectionLog,
+  }
+}
+)

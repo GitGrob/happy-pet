@@ -21,6 +21,7 @@ import NextInjection from './components/NextInjection.vue'
 import LogsTable from './components/LogsTable.vue'
 import Navbar from './components/Navbar.vue'
 import { InjectionLogs } from './type/DiabetesInjection'
+import { Cat } from './type/Cat'
 
 
 /* -------------------------------------------------------------------------- */
@@ -37,6 +38,11 @@ onMounted(async () => {
   await catStore.loadCats();
   await injectionStore.loadInjectionLogs();
 });
-const cat = computed(() => catStore.getFirstCat);
+
+
+/* -------------------------------------------------------------------------- */
+/*                                  COMPUTED                                  */
+/* -------------------------------------------------------------------------- */
+const cat = computed((): Cat => catStore.getFirstCat);
 const logs = computed((): InjectionLogs[] => injectionStore.getInjectionLogs);
 </script>
