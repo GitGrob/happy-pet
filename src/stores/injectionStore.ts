@@ -4,7 +4,7 @@ import { computed, ref } from 'vue';
 import { ofetch } from 'ofetch';
 
 
-const API_URL = import.meta.env.VITE_API_URL + '/injections';
+const API_URL = import.meta.env.VITE_API_URL
 
 export const useInjectionStore = defineStore('injection', () => {
   const logs = ref<InjectionLogs[]>([]);
@@ -19,7 +19,7 @@ export const useInjectionStore = defineStore('injection', () => {
   async function loadInjectionLogs() {
     isLoading.value = true;
     try {
-      logs.value = await ofetch(API_URL);
+      logs.value = await ofetch(API_URL + '/injections');
     } catch (error) {
       console.error('Failed to load injection logs:', error);
       logs.value = [];
@@ -30,7 +30,7 @@ export const useInjectionStore = defineStore('injection', () => {
 
   async function addInjectionLog(log: Omit<InjectionLogs, 'id'>) {
     try {
-      const newLog = await ofetch(API_URL, {
+      const newLog = await ofetch(API_URL + '/injection', {
         method: 'POST',
         body: log
       });

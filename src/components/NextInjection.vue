@@ -21,6 +21,7 @@
         </InputNumber>
         <Button type="button" :loading="buttonLoading" :severity="isInjectionAllowed ? '' : 'warn'" raised
           label="New Injection" @click="addNewInjection()" :disabled="!isInjectionAllowed || !unit" />
+
         <p v-if="!isInjectionAllowed" class="text-center text-orange-600 dark:text-orange-400 mt-1">
           Next injection at {{ nextInjection?.toFormat('hh:mm a') }}
         </p>
