@@ -21,8 +21,12 @@
 </template>
 
 <script setup lang="ts">
-  import {DateTime} from 'luxon';
-import type { InjectionLogs } from '~/type/DiabetesInjection';
+import { computed } from 'vue'
+import Card from 'primevue/card'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
+import { DateTime } from 'luxon'
+import type { InjectionLogs } from '../type/DiabetesInjection'
 
 type InjectionTable = {
   day: string;
@@ -32,9 +36,6 @@ type InjectionTable = {
 
 const props = defineProps<{logs: InjectionLogs[]}>()
 
-/* -------------------------------------------------------------------------- */
-/*                                   COMUTED                                  */
-/* -------------------------------------------------------------------------- */
 const injections = computed<InjectionTable[]>(() => {
   return props.logs.map((log) => {
   const datetime = DateTime.fromISO(log.date)
@@ -45,5 +46,4 @@ const injections = computed<InjectionTable[]>(() => {
   }
 })
 });
-
 </script>

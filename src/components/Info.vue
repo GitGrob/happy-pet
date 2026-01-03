@@ -38,17 +38,12 @@
 </template>
 
 <script setup lang="ts">
-import { Avatar, Card } from 'primevue';
-import type { Cat } from '~/type/Cat';
-
-
-/* -------------------------------------------------------------------------- */
-/*                                  VARIABLES                                 */
-/* -------------------------------------------------------------------------- */
+import { Avatar, Card } from 'primevue'
+import type { Cat } from '../type/Cat'
 
 const props = defineProps<{cat: Cat}>()
 
-    const calculateAge = (dateString: string): number => {
+const calculateAge = (dateString: string): number => {
   const birthDate = new Date(dateString);
   const today = new Date();
   let age = today.getFullYear() - birthDate.getFullYear();
@@ -61,4 +56,4 @@ const props = defineProps<{cat: Cat}>()
   }
   return age;
 };
-    </script>
+</script>

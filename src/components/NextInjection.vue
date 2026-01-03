@@ -30,16 +30,16 @@
 </template>
 
 <script setup lang="ts">
-import {Duration, DateTime} from 'luxon';
-import type { InjectionLogs } from '~/type/DiabetesInjection';
-
+import { ref, computed } from 'vue'
+import Card from 'primevue/card'
+import InputNumber from 'primevue/inputnumber'
+import Button from 'primevue/button'
+import { Duration, DateTime } from 'luxon'
+import type { InjectionLogs } from '../type/DiabetesInjection'
 
 const props = defineProps<{logs: InjectionLogs[]}>()
 const dose = ref<number | null>(null);
 
-/* -------------------------------------------------------------------------- */
-/*                                  COMPUTED                                  */
-/* -------------------------------------------------------------------------- */
 const lastInjectionTime = computed(() => {
   if (props.logs.length === 0) return null;
   if (!props.logs[0]) return null;
@@ -58,27 +58,7 @@ const isInjectionAllowed = computed(() => {
   return diff.as('hours') >= 12;
 });
 
-// const addInjection = () => {
-//   if (!dose.value || !isInjectionAllowed.value) return;
-
-//   const now = new Date();
-//   const year = now.getFullYear();
-//   const month = String(now.getMonth() + 1).padStart(2, '0');
-//   const day = String(now.getDate()).padStart(2, '0');
-//   const hours = String(now.getHours()).padStart(2, '0');
-//   const minutes = String(now.getMinutes()).padStart(2, '0');
-
-//   const dateStr = `${year}-${month}-${day}`;
-//   const timeStr = `${hours}:${minutes}`;
-//   const period = now.getHours() < 12 ? 'AM' : 'PM';
-
-//   logs.value.unshift({
-//     day: dateStr,
-//     hour: timeStr,
-//     unit: dose.value.toString(),
-//     period: period
-//   });
-
-//   dose.value = null;
-// };
+const addInjection = () => {
+  console.log('Adding injection:', dose.value);
+}
 </script>
