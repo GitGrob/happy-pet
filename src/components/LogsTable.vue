@@ -8,11 +8,12 @@
     </template>
 
     <template #subtitle>
-      <span class="text-sm text-surface-500 dark:text-surface-300">Recent diabetes entries</span>
+      <span class="text-sm text-surface-500 dark:text-surface-300">Last 100 recent diabetes entries</span>
     </template>
 
     <template #content>
-      <DataTable size="small" :value="injections" :loading="loading">
+      <DataTable size="small" paginator :rows="rows" :rows-per-page-options="[5, 10, 20]" :value="injections"
+        :loading="loading">
         <Column field="day" header="Day"></Column>
         <Column field="hour" header="Hour"></Column>
         <Column field="unit" header="Unit"></Column>
@@ -22,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import Card from 'primevue/card'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
@@ -35,7 +36,16 @@ type InjectionTable = {
   unit: number;
 }
 
+/* -------------------------------------------------------------------------- */
+/*                                   STATES                                   */
+/* -------------------------------------------------------------------------- */
+
 const props = defineProps<{ logs: InjectionLogs[], loading: boolean }>()
+const rows = ref<number>(5)
+
+/* -------------------------------------------------------------------------- */
+/*                                  COMPUTED                                  */
+/* -------------------------------------------------------------------------- */
 
 const injections = computed<InjectionTable[]>(() => {
   return props.logs.map((log) => {

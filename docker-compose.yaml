@@ -1,43 +1,32 @@
 services:
-  postgres:
-    image: postgres:17.7
-    container_name: postgres
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: happy_pet_db
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    restart: unless-stopped
-
-  # Backend 
+  # TEMP SERVER 
   backend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
+      context: ./
+      dockerfile: server/Dockerfile
     container_name: backend_app
     ports:
-      - "8080:8080"
-    depends_on:
-      - postgres
+      - "3001:3001"
+    volumes:
+      - ./server:/app/server
     environment:
-      DB_HOST: postgres
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_NAME: happy_pet_db
+      - NODE_ENV=development
+    command: npm run dev:server
 
   # Frontend 
   frontend:
     build:
-      context: ./frontend
+      context: ./
       dockerfile: Dockerfile
     container_name: frontend_app
     ports:
       - "3000:3000"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://localhost:3001
     depends_on:
       - backend
-
-volumes:
-  postgres_data:
+    command: npm run dev

@@ -4,6 +4,9 @@ export interface Cat {
     breed: string;
     color: string;
     weight: number;
+    injectionUnits: number;
+    insulinType: string;
+    food: number;
     imageUrl: string | undefined;
     dateOfBirth: string;
 }

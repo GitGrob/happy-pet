@@ -5,6 +5,9 @@
       "name": "Minou",
       "breed": "Tigré",
       "color": "Noir",
+      "food": 60,
+      "injectionUnits": 3.5,
+      "insulinType": "Caninsulin",
       "weight": 4.5,
       "imageUrl": null,
       "dateOfBirth": "2020-05-15"

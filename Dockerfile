@@ -1,16 +1,12 @@
 FROM node:24.11.1
 
-
-#RUN useradd -m appuser
-WORKDIR /app
-#USER appuser
-
-COPY package*.json ./
-RUN npm install
+RUN mkdir /frontend
+WORKDIR /frontend
 
 COPY . .
 
-EXPOSE 3000
+RUN npm install
+
+EXPOSE 3000 5173
 
 CMD ["npm", "run", "dev"]
-
